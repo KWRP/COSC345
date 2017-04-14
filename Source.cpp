@@ -9,16 +9,39 @@ Day->week.*/
 
 using namespace std;
 
+
+class Event {
+private:
+	string eventTime;
+	string eventName;
+	string eventDescript;
+
+public: 
+	Event(string time, string eventName, string eventDescript) {
+		this->eventTime = time;
+		this->eventName = eventName;
+		this->eventDescript = eventDescript;
+	}
+	Event() {}
+	~Event() {}
+
+	string showEvent() {
+		return "Event : " + eventName + " Time: " + 
+			eventTime + " Event Descript: " + eventDescript;
+	}
+};
+
+
 class Day {
 private:
 	string date;
-	vector< vector<string> > events;
+	vector<Event> events;
 
 public:
 	string getDate() { return date; }
-	void setEvent(string name, string description);
-	string getEvent();
-	string show();
+	void createEvent(string time, string name, string description);
+	void displayEvents();
+	
 	Day(string date) {
 		this->date = date;
 	}
@@ -27,25 +50,22 @@ public:
 		struct tm *now = localtime(&t);
 		date = now->tm_year + now->tm_mon + now->tm_mday;
 	}
+	~Day(){}
 };
 
-void Day::setEvent(string name, string desription) { // maybe add colour here.
-	vector<string>& lastElement = events.back();
-	//events.push_back(<vector>name);
-	//events.push_back(desription);
+void Day::createEvent(string time, string name, string description) { // maybe add colour here.
+	Event newEvent = Event(time, name, description);
+	events.push_back(newEvent);
 }
 
-string Day::getEvent() {
-	string result = "";
-	for (int i = 0; i < events.size(); i++) {
-		result += "you have " + events[i][0] + "\n Description :" + events[i][1];
+void Day::displayEvents() {
+	cout << "The events for " << date << " are as follows: " << endl;
+
+	for (int i = 0; i < events.size() -1; i++){
+		cout << events[i].showEvent() << endl;
 	}
-	return result;
 }
 
-string Day::show() {
-	return "Date : " + date + " Event: " + getEvent();
-}
 /*
 class Month : public Day {
 private:
@@ -87,7 +107,7 @@ cout << "please add a month and year." << endl;
 */
 int main(int argc, char* argv[])
 {
-	Day day = Day("Monday 1st");
+	Day day = Day("Monday 1st of March");
 
 	std::cout << "Hello" << std::endl;
 	bool loop = true;;
@@ -101,12 +121,17 @@ int main(int argc, char* argv[])
 		else {
 			std::cout << "Please enter a description of the event: " << std::endl;
 			string eventDescript = "";
+
 			std::cin >> eventDescript;
-			day.setEvent(eventName, eventDescript);
+			std::cout << "Please enter a start time for the event: " << std::endl;
+			string eventTime = "";
+
+			std::cin >> eventTime;
+			day.createEvent(eventTime, eventName, eventDescript);
 		}
 	}
 	// display events
-	std::cout << day.show() << std::endl;
+	day.displayEvents();
 	int i = 0;
 	std::cin >> i;
 }

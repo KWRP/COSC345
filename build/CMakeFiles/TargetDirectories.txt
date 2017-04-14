@@ -1,0 +1,7 @@
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/install.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/rebuild_cache.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/planner.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/edit_cache.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/list_install_components.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/install/strip.dir
+C:/Users/willy/Source/Repos/COSC345/build/CMakeFiles/install/local.dir
