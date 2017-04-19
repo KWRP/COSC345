@@ -4,6 +4,18 @@
 
 bool Test(const char* day = 0, const char* month = 0, const char* year = 0){
 
+	bool check = checkDate(day,month,year);
+	
+	if (check == false) {
+		return create(day, month, year);
+	}
+	else{
+		return true;
+	}
+}
+
+bool checkDate(const char* day = 0, const char* month = 0, const char* year = 0) {
+
 	tinyxml2::XMLDocument xml_doc;
 
 	tinyxml2::XMLError eResult = xml_doc.LoadFile("events.xml");
@@ -42,6 +54,8 @@ bool create(const char* day = 0, const char* month = 0, const char* year = 0) {
 		tinyxml2::XMLElement * elementDay = xmlDoc.NewElement(day);
 		elementMonth->InsertEndChild(elementDay);
 	}
+
+	return true;
 }
 
 int main()
@@ -52,6 +66,5 @@ int main()
 	else {
 		std::cout << "fail" << std::endl;
 	}
-	create();
 }
 
