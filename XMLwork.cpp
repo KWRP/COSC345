@@ -1,45 +1,33 @@
-#include <stdio.h>
-#include <tchar.h>
-#include <windows.h>
-#import <msxml6r.dll> rename_namespace(_T("MSXML"))
+#include <iostream>
+#include <stdlib.h>
+#include "tinyxml2.h"
 
-int main(int argc, char* argv[])
-{
-	HRESULT hr = CoInitialize(NULL);
-	if (SUCCEEDED(hr))
-	{
-		try
-		{
-			MSXML::IXMLDOMDocument2Ptr xmlDoc;
-			hr = xmlDoc.CreateInstance(__uuidof(MSXML::DOMDocument60), NULL, CLSCTX_INPROC_SERVER);
-			// TODO: if (FAILED(hr))...
+bool Test(const char* day = 0, const char* month = 0, const char* year = 0){
 
-			if (xmlDoc->load(_T("input.xml")) != VARIANT_TRUE)
-			{
-				printf("Unable to load input.xml\n");
-			}
-			else
-			{
-				printf("XML was successfully loaded\n");
+	tinyxml2::XMLDocument xml_doc;
 
-				xmlDoc->setProperty("SelectionLanguage", "XPath");
-				MSXML::IXMLDOMNodeListPtr wheels = xmlDoc->selectNodes("/Car/Wheels/*");
-				printf("Car has %u wheels\n", wheels->Getlength());
+	tinyxml2::XMLError eResult = xml_doc.LoadFile("events.xml");
+	if (eResult != tinyxml2::XML_SUCCESS) return false;
 
-				MSXML::IXMLDOMNodePtr node;
-				node = xmlDoc->createNode(MSXML::NODE_ELEMENT, _T("Engine"), _T(""));
-				node->text = _T("Engine 1.0");
-				xmlDoc->documentElement->appendChild(node);
-				hr = xmlDoc->save(_T("output.xml"));
-				if (SUCCEEDED(hr))
-					printf("output.xml successfully saved\n");
-			}
-		}
-		catch (_com_error &e)
-		{
-			printf("ERROR: %ws\n", e.ErrorMessage());
-		}
-		CoUninitialize();
-	}
-	return 0;
+	tinyxml2::XMLNode* elementYear = xml_doc.FirstChildElement(year);
+	if (elementYear == nullptr) return false;
+
+	tinyxml2::XMLElement* elementMonth = elementYear->FirstChildElement(month);
+	if (elementMonth == nullptr) return false;
+
+	tinyxml2::XMLElement* elementDay = elementMonth->FirstChildElement(day);
+	if (elementDay == nullptr) return false;
+
+	return true;
 }
+
+int main()
+{
+	if (Test() == true) {
+		std::cout << "success" << std::endl;
+	}
+	else {
+		std::cout << "fail" << std::endl;
+	}
+}
+

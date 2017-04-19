@@ -13,7 +13,7 @@
 	#include <direct.h>		// _mkdir
 	#include <crtdbg.h>
 	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
+	#include <windowsx.h>
 	_CrtMemState startMemState;
 	_CrtMemState endMemState;
 #elif defined(MINGW32) || defined(__MINGW32__)

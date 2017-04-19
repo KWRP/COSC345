@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskName": "task-XMLwork",
+      "appliesTo": "XMLwork.cpp",
+      "type": "command"
+    },
+    {
+      "taskName": "task-XMLwork",
+      "appliesTo": "XMLwork.cpp",
+      "type": "command"
+    }
+  ]
+}
