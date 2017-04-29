@@ -1,8 +1,5 @@
 #include "Month.h"
 
-Month::Month() {
-	cout << "please add a month and year." << endl;
-}
 Month::Month(string date) {
 	this->date = date;
 	int year = stoi(date.substr(5, 4));
