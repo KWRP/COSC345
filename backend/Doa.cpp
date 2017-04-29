@@ -13,7 +13,7 @@ Month getMonth(Year year, string date) {
 }
 
 Day getDay(Year year, string date) {
-	return getDay(getMonth(year, date), date);
+	return getMonth(year, date).getDay(date);
 }
 
 Day getDay(Month month, string date) {
