@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +19,13 @@ import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
-    private Calendar calender;
+    private Calendar currentDate;
     private ArrayList<Integer> currentDay = new ArrayList<>();
 
 
     // Used to load the 'native-lib' library on application startup.
     static {
-        System.loadLibrary("native-lib");
+        System.loadLibrary("calender");
     }
 
     @Override
@@ -43,16 +44,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Example of a call to a native method
-        //TextView tv = (TextView) findViewById(R.id.sample_text);
-        //tv.setText(stringFromJNI());
-
-
-        calender = Calendar.getInstance();
-
-        currentDay.add(27);//calender.get(Calendar.DAY_OF_MONTH));
-        currentDay.add(2);//calender.get(Calendar.MONTH)); // zero based
-        currentDay.add(calender.get(Calendar.YEAR));
+        currentDate = Calendar.getInstance();
+        currentDay.add(Integer.parseInt(stringFromJNI()));//calender.get(Calendar.DAY_OF_MONTH));
+        currentDay.add(Integer.parseInt(stringFromJNI()));//calender.get(Calendar.MONTH)); // zero based
+        currentDay.add(currentDate.get(Calendar.YEAR));
 
         final DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -63,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
             protected void onDate(int[] date, int position, View item) {
             }
         });
+
+        // Example of a call to a native method
+        TextView tv = (TextView) findViewById(R.id.sample_text);
+        //tv.setText(stringFromJNI());
+        Log.d("TESTING!!!", testJNI());
+        //mGridView.findViewById(1).tex = testJNI();
+
     }
 
     @Override
@@ -83,7 +85,18 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_sync) {
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about) {
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_exit) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -91,5 +104,6 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    //public native String stringFromJNI();
+    public native String stringFromJNI();
+    public native String testJNI();
 }
