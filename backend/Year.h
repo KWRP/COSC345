@@ -13,7 +13,7 @@ public:
 	void setDate(string date) { this->date = date; }
 	string getDate() { return date; }
 	string toString();
-	Month getMonth(int mon);
+	Month getMonth(string date);
 
 	Year(string);
 	~Year();

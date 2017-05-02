@@ -1,6 +1,7 @@
 #include "Week.h"
+#include <string>
 
-Week::Week(string date) {
+Week::Week(string date) {//might need to check that the substr is correct
 	this->date = date;
 	int mon = stoi(date.substr(3, 1));
 	int daysInMonth = 1;
@@ -25,11 +26,11 @@ Week::Week(string date) {
 			dateOfWeek = 1;
 			int month = stoi(date.substr(2, 2));
 			int year = stoi(date.substr(5, 4));
-			if (mon == 12) {
+			if (mon == 12) {//checking that if it's the end of the year
 				year++;
 				date = "01/01/" + to_string(year);
 			}
-			else {
+			else {//checks if it's the end of the month
 				date = "01/" + to_string(month + 1) + to_string(year);
 			}
 		}

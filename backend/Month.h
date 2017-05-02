@@ -4,7 +4,7 @@
 #include "Day.h"
 
 class Month {
-private:	vector<Day> day; //maybe use an arrray
+private:	vector<Day> day; //maybe use an array
 			string date;
 public:
 	void setDate(string date) { this->date = date; }

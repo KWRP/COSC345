@@ -7,7 +7,7 @@
 class Week {
 private:
 	string date;
-	vector<Day> week;
+	vector<Day> week; //array of days,  should probable change to an array
 
 public:
 	string getDate() { return date; }
