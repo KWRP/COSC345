@@ -45,6 +45,7 @@ void setEvent(Week week, string date, string title, string description, int time
 int main() {
 	string quit;
 	cout << "hello world" << endl;
+
 	Year year = Year("01/01/2017");
 	setEvent(year,"02.05.2017", "test", "testing set event", 245, 5);
 	cout << getDay(year, "02.05.2017").toString() << endl;
