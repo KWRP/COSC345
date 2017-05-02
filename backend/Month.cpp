@@ -1,11 +1,12 @@
 #include "Month.h"
+#include <string>
 
 Month::Month(string date) {
 	this->date = date;
-	int year = stoi(date.substr(5, 4));
-	int mon = stoi(date.substr(2, 2));
+	int year = stoi(date.substr(6, 4));
+	int mon = stoi(date.substr(3, 2));
 	int numDays = 0;
-	if (mon ==2 && year % 4 == 0 && year % 100 && year % 400) {
+	if (mon ==2 && year % 4 == 0 && year % 100 && year % 400) {//equation for leap year
 		numDays = 29;
 	}
 	else {

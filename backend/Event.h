@@ -19,8 +19,8 @@ public:
 	string getDescription() const { return description; }
 	int getStartTime() const { return startTime; }
 	int getDuration() const { return duration; }
-
+	string toString();
 	Event(string, string, int, int);
-};//will be changed with the xml api.
+};//will be changed with the xml api. 
 
 #endif

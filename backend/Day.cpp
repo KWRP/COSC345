@@ -1,4 +1,5 @@
 #include "Day.h"
+#include <string>
 
 Day::Day(string date) {
 	this->date = date;
@@ -19,10 +20,10 @@ Event Day::getEvent(int eventNumber) {
 }
 string Day::toString() {
 	string result = "";
-	result = "Date : " + date + "\n number of Events : " + to_string(events.size()) + "\n";
+	result = "Date : " + date + "\nnumber of Events : " + to_string(events.size()) + "\n";
 	return result;
 }
 
-void Day::addEvent(string title, string description, int time, int duration) {
+void Day::addEvent(string title, string description, int time, int duration) {//will change when the xml for event is working
 	events.push_back(Event(title, description, time, duration));
 }
