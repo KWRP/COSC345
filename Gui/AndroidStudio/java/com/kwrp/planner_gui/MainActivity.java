@@ -1,5 +1,6 @@
 package com.kwrp.planner_gui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,12 +11,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.kwrp.planner_gui.R.id.gridview;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,17 +50,28 @@ public class MainActivity extends AppCompatActivity {
         });
 
         currentDate = Calendar.getInstance();
-        currentDay.add(Integer.parseInt(stringFromJNI()));//calender.get(Calendar.DAY_OF_MONTH));
-        currentDay.add(Integer.parseInt(stringFromJNI()));//calender.get(Calendar.MONTH)); // zero based
+        currentDay.add(currentDate.get(Calendar.DAY_OF_MONTH));
+        currentDay.add(currentDate.get(Calendar.MONTH)); // zero based
         currentDay.add(currentDate.get(Calendar.YEAR));
 
         final DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        GridView mGridView = (GridView) findViewById(R.id.gridview);
+        GridView mGridView = (GridView) findViewById(gridview);
         mGridView.setAdapter(new MonthAdapter(this, currentDay.get(1), currentDay.get(2), metrics) {
             @Override
             protected void onDate(int[] date, int position, View item) {
+            }
+        });
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                Intent myIntent = new Intent(arg1.getContext(), DisplayDay.class); /** Class name here */
+                startActivityForResult(myIntent, 0);
+                return true;
             }
         });
 

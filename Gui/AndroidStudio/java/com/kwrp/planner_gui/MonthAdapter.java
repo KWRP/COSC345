@@ -180,7 +180,7 @@ public abstract class MonthAdapter extends BaseAdapter {
 
         int[] date = getDate(position);
         if (date != null) {
-            view.setHeight(mDayHeight);
+            view.setHeight(mDayHeight-50);
             if (date[1] != mMonth) {
                 // previous or next month
                 view.setBackgroundColor(Color.rgb(234, 234, 250));
@@ -193,7 +193,7 @@ public abstract class MonthAdapter extends BaseAdapter {
             }
         } else {
             view.setBackgroundColor(Color.argb(100, 10, 80, 255));
-            view.setHeight(mTitleHeight);
+            view.setHeight(mTitleHeight+100);
         }
 
         onDate(date, position, view);
