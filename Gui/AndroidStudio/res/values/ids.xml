@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="label_date"/>
+    <item type="id" name="label_events"/>
+    <item type="id" name="list_view_events"/>
+    <item type="id" name="output_selected_date"/>
+</resources>
