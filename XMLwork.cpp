@@ -33,13 +33,16 @@ bool createDate(const char* day = 0, const char* month = 0, const char* year = 0
 
 	XMLDocument xml_doc;
 
+	XMLError eResult = xml_doc.LoadFile("events.xml");
+	if (eResult != XML_SUCCESS) return false;
+	
 	int yearInt = atoi(year);
 	int monthInt = atoi(month);
 	int dayInt = atoi(day);
 	
 	if (yearInt <= 0 || monthInt <= 0 || monthInt > 12 || dayInt <= 0 || dayInt >= 31) { 
 		return false; 
-	}
+	}elif(checkDate(day,month,year)){return true;}
 	else {
 		XMLNode * elementYear = xml_doc.NewElement(year);
 		xml_doc.InsertFirstChild(elementYear);
@@ -64,7 +67,9 @@ bool addEvent(const char* day = 0, const char* month = 0, const char* year = 0, 
 
 	XMLError eResult = xml_doc.LoadFile("events.xml");
 	if (eResult != XML_SUCCESS) return false;
-
+	
+	createDate(day,month,year);
+	
 	XMLNode* elementYear = xml_doc.FirstChildElement(year);
 	XMLElement* elementMonth = elementYear->FirstChildElement(month);
 	XMLElement* elementDay = elementMonth->FirstChildElement(day);
@@ -85,6 +90,37 @@ bool addEvent(const char* day = 0, const char* month = 0, const char* year = 0, 
 
 	XMLError eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
+	return true;
 }
 
+bool pullDay(const char* day = 0, const char* month = 0, const char* year = 0) {
 
+	XMLDocument xml_doc;
+
+	XMLError eResult = xml_doc.LoadFile("events.xml");
+	if (eResult != XML_SUCCESS) return false;
+
+	XMLNode* elementYear = xml_doc.FirstChildElement(year);
+	if (elementYear == nullptr) return false;
+
+	XMLElement* elementMonth = elementYear->FirstChildElement(month);
+	if (elementMonth == nullptr) return false;
+
+	XMLElement* elementDay = elementMonth->FirstChildElement(day);
+	if (elementDay == nullptr) return false;
+
+	//testing section
+	XMLElement* elementEventCurr = elementDay->FirstChildElement(event);
+	XMLElement* elementEventLast = elementDay->LastChildElement(event);
+	
+	while(elementEventCurr != elementEventLast){
+		//create event thing
+		//add to day object
+		elementEventCurr = elementEventCurr->nextSibling(event);
+	}
+	//ending testing section
+	XMLError eResult = xml_doc.SaveFile("events.xml");
+	XMLCheckResult(eResult);
+
+	return true;
+}
