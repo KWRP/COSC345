@@ -6,4 +6,12 @@
     <string name="action_exit">Exit</string>
     <string name="label_events">Events:</string>
     <string name="label_date">Date:</string>
+    <string name="title_activity_display_week">DisplayWeek</string>
+    <string name="label_monday">Mon</string>
+    <string name="label_tuesday">Tues</string>
+    <string name="label_wednesday">Wed</string>
+    <string name="label_thursday">Thurs</string>
+    <string name="label_friday">Fri</string>
+    <string name="label_saturday">Sat</string>
+    <string name="label_sunday">Sun</string>
 </resources>
