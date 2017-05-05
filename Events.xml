@@ -1,0 +1,12 @@
+<year YID=2017>
+	<month MID=05>
+		<day DID=05>
+			<event EID=1>
+				<title>start up test </title>
+				<description>this is a sample event </description>
+				<startTime>4800</startTime>
+				<duration>60</duration>
+			</event>
+		</day>
+	</month>
+</year>
