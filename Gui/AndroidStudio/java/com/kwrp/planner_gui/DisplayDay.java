@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class DisplayDay extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events);
+        setContentView(R.layout.activity_display_day);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,13 +35,18 @@ public class DisplayDay extends AppCompatActivity {
                 eventItems);
         ListView events = (ListView) findViewById(R.id.list_view_events);
         events.setAdapter(listAdapter);
+
+        EditText dateField = (EditText) findViewById(R.id.output_selected_date);
+        String currentDate = jniGetCurrentDate();
+        dateField.setText(currentDate);
     }
 
     protected void getEvents() {
         int cplusplusEvents = 3;
         for (int event = 0; event < cplusplusEvents; event++) {
             eventItems.add("Events o'clock");
-        }
+        }String e = jniGetEvents();
+        eventItems.add(e);//jniGetEvents());
     }
 
     @Override
@@ -75,4 +81,12 @@ public class DisplayDay extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
+     */
+    public native String jniGetEvents();
+    public native String jniGetCurrentDate();
+    public native Object jniGetDay();
 }
