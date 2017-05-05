@@ -9,10 +9,12 @@ Day::Day(string date) {
 }
 
 Day::Day() {
-	/*	time_t t = time(0);
+	time_t t = time(0);
 	struct tm *now = localtime(&t);
-	date = now->tm_year + now->tm_mon + now->tm_mday;*/
+	date = numToString(now->tm_mday) + "/" + numToString(now->tm_mon + 1)
+           + "/" + numToString(now->tm_year + 1900);
 }
+
 Day::~Day() {}
 
 void Day::setEvent(string name, string description, int startTime, int duration) { // maybe add colour here.
