@@ -1,8 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.kwrp.planner_gui.DisplayDay"
-    >
+    tools:context="com.kwrp.planner_gui.DisplayDay">
+    <item
+        android:id="@+id/action_display_month"
+        android:orderInCategory="100"
+        android:title="@string/action_display_month"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_display_week"
+        android:orderInCategory="100"
+        android:title="@string/action_display_week"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
