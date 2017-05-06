@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#2a4af8</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="background_blue">#eaeafa</color>
+    <color name="days_of_week_blue">#640a50ff</color>
 
 </resources>

@@ -4,5 +4,8 @@
     <item type="id" name="label_events"/>
     <item type="id" name="list_view_events"/>
     <item type="id" name="output_selected_date"/>
+    <item type="id" name="toolbar_month"/>
+    <item type="id" name="toolbar_week"/>
+    <item type="id" name="toolbar_day"/>
     <item type="id" name="bottom_nav"/>
 </resources>
