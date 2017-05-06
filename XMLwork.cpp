@@ -17,23 +17,23 @@ bool checkDate(const char* day = 0, const char* month = 0, const char* year = 0)
 
 	XMLElement* elementYear = xml_doc.FirstChildElement("year");	
 	while (elementYear != nullptr){
-		if !(elementYear->attribute("YID",year)) elementYear = elementYear->nextSibling("year");
+		if !(elementYear->Attribute("YID",year)) elementYear = elementYear->NextSibling("year");
 	}
 	if (elementYear == nullptr) return false;
 
 	XMLElement* elementMonth = elementYear->FirstChildElement("month");
 	while (elementMonth != nullptr){
-		if !(elementMonth->attribute("MID",month)) elementMonth = elementMonth->nextSibling("month");
+		if !(elementMonth->Attribute("MID",month)) elementMonth = elementMonth->NextSibling("month");
 	}
 	if (elementMonth == nullptr) return false;
 
 	XMLElement* elementDay = elementMonth->FirstChildElement("day");
 	while (elementDay != nullptr){
-		if !(elementDay->attribute("DID",day)) elementDay = elementDay->nextSibling("day");
+		if !(elementDay->Attribute("DID",day)) elementDay = elementDay->NextSibling("day");
 	}
 	if (elementDay == nullptr) return false;
 
-	XMLError eResult = xml_doc.SaveFile("events.xml");
+	eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
 
 	return true;
@@ -56,19 +56,19 @@ bool createDate(const char* day = 0, const char* month = 0, const char* year = 0
 		return true;
 	}else {
 		XMLElement * elementYear = xml_doc.NewElement("year");
-		elementyear->setAttribute("YID",year);
+		elementYear->SetAttribute("YID",year);
 		xml_doc.InsertFirstChild(elementYear);
 
 		XMLElement * elementMonth = xml_doc.NewElement("month");
-		elementMonth->setAttribute("MID",month)
+		elementMonth->SetAttribute("MID",month)
 		elementYear->InsertEndChild(elementMonth);
 
 		XMLElement * elementDay = xml_doc.NewElement("day");
-		elementDay->setAttribute("DID",day)
+		elementDay->SetAttribute("DID",day)
 		elementMonth->InsertEndChild(elementDay);
 	}
 
-	XMLError eResult = xml_doc.SaveFile("events.xml");
+	eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
 	return true;
 }
@@ -91,25 +91,25 @@ bool addEvent(const char* day = 0, const char* month = 0, const char* year = 0, 
 	
 	int eventNum = elementDay->LastChildElement("event")->IntAttribute(EID);
 	eventNum += 1;
-	elementEvent->setAttribute("EID",eventNum);
+	elementEvent->SetAttribute("EID",eventNum);
 
 	XMLElement* elementTit = xml_doc.NewElement("title");
-	ElementTit->setText(title);
+	elementTit->SetText(title);
 	elementEvent->InsertEndChild(elementTit);
 
 	XMLElement* elementDesc = xml_doc.NewElement("description");
-	elementDesc->setText(description);
+	elementDesc->SetText(description);
 	elementEvent->InsertEndChild(elementDesc);
 
 	XMLElement* elementST = xml_doc.NewElement("startTime");
-	elementST->setText(startTime);
+	elementST->SetText(startTime);
 	elementEvent->InsertEndChild(elementST);
 
 	XMLElement* elementDur = xml_doc.NewElement("duration");
-	elementDur->setText(duration);
+	elementDur->SetText(duration);
 	elementEvent->InsertEndChild(elementDur);
 
-	XMLError eResult = xml_doc.SaveFile("events.xml");
+	eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
 	return true;
 }
@@ -123,19 +123,19 @@ bool pullDay(const char* day = 0, const char* month = 0, const char* year = 0) {
 	
 	XMLElement* elementYear = xml_doc.FirstChildElement("year");	
 	while (elementYear != nullptr){
-		if !(elementYear->attribute("YID",year)) elementYear = elementYear->nextSibling("year");
+		if !(elementYear->Attribute("YID",year)) elementYear = elementYear->NextSibling("year");
 	}
 	if (elementYear == nullptr) return false;
 
 	XMLElement* elementMonth = elementYear->FirstChildElement("month");
 	while (elementMonth != nullptr){
-		if !(elementMonth->attribute("MID",month)) elementMonth = elementMonth->nextSibling("month");
+		if !(elementMonth->Attribute("MID",month)) elementMonth = elementMonth->NextSibling("month");
 	}
 	if (elementMonth == nullptr) return false;
 
 	XMLElement* elementDay = elementMonth->FirstChildElement("day");
 	while (elementDay != nullptr){
-		if !(elementDay->attribute("DID",day)) elementDay = elementDay->nextSibling("day");
+		if !(elementDay->Attribute("DID",day)) elementDay = elementDay->NextSibling("day");
 	}
 	if (elementDay == nullptr) return false;
 	
@@ -149,21 +149,21 @@ bool pullDay(const char* day = 0, const char* month = 0, const char* year = 0) {
 	
 	while(eventCurr != eventLast){
 		
-		const char* title = elementEventCurr->FirstChildElement("title")->getText();
-		const char* description = elementEventCurr->FirstChildElement("description")->getText();
-		int startTime = elementEventCurr->FirstChildElement("startTime")->getText();
-		int duration = elementEventCurr->FirstChildElement("duration")->getText();
+		const char* title = elementEventCurr->FirstChildElement("title")->GetText();
+		const char* description = elementEventCurr->FirstChildElement("description")->GetText();
+		int startTime = elementEventCurr->FirstChildElement("startTime")->GetText();
+		int duration = elementEventCurr->FirstChildElement("duration")->GetText();
 		
 		//add event to day 
 		day->setEvent(title,description,startTime,duration);
 		
 		//increment event
-		elementEventCurr = elementEventCurr->nextSibling("event");
+		elementEventCurr = elementEventCurr->NextSibling("event");
 	}
 	
 	//end testing section
 	
-	XMLError eResult = xml_doc.SaveFile("events.xml");
+	eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
 
 	return true;
