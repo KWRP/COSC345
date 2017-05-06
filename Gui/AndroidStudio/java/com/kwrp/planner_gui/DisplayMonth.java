@@ -3,6 +3,7 @@ package com.kwrp.planner_gui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -25,8 +25,8 @@ import static com.kwrp.planner_gui.R.id.gridview;
 
 
 public class DisplayMonth extends AppCompatActivity {
-    private Calendar currentDate;
-    private ArrayList<Integer> currentDay = new ArrayList<>();
+    //private Calendar currentDate;
+    //private ArrayList<Integer> currentDay = new ArrayList<>();
 
 
     // Used to load the 'native-lib' library on application startup.
@@ -39,6 +39,7 @@ public class DisplayMonth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_month);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_month);
+        toolbar.setSubtitle("Today's Date: " + jniGetCurrentDate());
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -50,38 +51,32 @@ public class DisplayMonth extends AppCompatActivity {
             }
         });
 
-        currentDate = Calendar.getInstance();
-        currentDay.add(currentDate.get(Calendar.DAY_OF_MONTH));
-        currentDay.add(currentDate.get(Calendar.MONTH)); // zero based
-        currentDay.add(currentDate.get(Calendar.YEAR));
-
+        String[] systemDate = jniGetCurrentDate().split("/");
         final DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         GridView mGridView = (GridView) findViewById(gridview);
-        mGridView.setAdapter(new MonthAdapter(this, currentDay.get(1), currentDay.get(2), metrics) {
-            @Override
-            protected void onDate(int[] date, int position, View item) {
-            }
-        });
+        mGridView.setAdapter(new MonthAdapter(
+                this, Integer.parseInt(systemDate[1])-1, Integer.parseInt(systemDate[2]), metrics));
 
         mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
                                            int arg2, long arg3) {
+
+                TextView view = (TextView) ((GridView) findViewById(gridview)).getChildAt(arg2);
+                String dateSelected = view.getText().toString();
                 Intent myIntent = new Intent(arg1.getContext(), DisplayDay.class); /** Class name here */
+                myIntent.putExtra("date", dateSelected);
                 startActivity(myIntent);
+                //Log.d("TESTING!!!", dateSelected);
+                //Integer v = ((GridView) findViewById(gridview)).getChildCount();
+                //TextView view = (TextView)((GridView) findViewById(gridview)).getChildAt(arg2);
+                //view.setBackgroundColor(Color.rgb(255, 155, 155));
                 return true;
             }
         });
-
-        // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        //tv.setText(stringFromJNI());
-        Log.d("TESTING!!!", testJNI());
-        //mGridView.findViewById(1).tex = testJNI();
-
     }
 
     @Override
@@ -142,5 +137,6 @@ public class DisplayMonth extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
+    public native String jniGetCurrentDate();
     public native String testJNI();
 }

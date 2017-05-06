@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public abstract class MonthAdapter extends BaseAdapter {
+public class MonthAdapter extends BaseAdapter {
     private GregorianCalendar mCalendar;
     private Calendar mCalendarToday;
     private Context mContext;
@@ -48,7 +48,7 @@ public abstract class MonthAdapter extends BaseAdapter {
      * @param position - position in item list
      * @param item - view for date
      */
-    protected abstract void onDate(int[] date, int position, View item);
+    protected void onDate(int[] date, int position, View item) {};
 
     private void populateMonth() {
         mItems = new ArrayList<String>();
