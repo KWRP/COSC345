@@ -1,6 +1,7 @@
 package com.kwrp.planner_gui;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +27,7 @@ public class DisplayDay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_day);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_day);
         setSupportActionBar(toolbar);
 
         getEvents();
@@ -45,14 +46,15 @@ public class DisplayDay extends AppCompatActivity {
         int cplusplusEvents = 3;
         for (int event = 0; event < cplusplusEvents; event++) {
             eventItems.add("Events o'clock");
-        }String e = jniGetEvents();
+        }
+        String e = jniGetEvents();
         eventItems.add(e);//jniGetEvents());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_day, menu);
         return true;
     }
 
@@ -62,6 +64,18 @@ public class DisplayDay extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.action_display_month) {
+            Intent myIntent = new Intent(this, DisplayMonth.class); /** Class name here */
+            startActivity(myIntent);
+            finish();
+        }
+        if (id == R.id.action_display_week) {
+            Intent myIntent = new Intent(this, DisplayWeek.class); /** Class name here */
+            startActivity(myIntent);
+            //startActivityForResult(myIntent, 0);
+            finish();
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -73,10 +87,6 @@ public class DisplayDay extends AppCompatActivity {
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            return true;
-        }
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_exit) {
             return true;
         }
         return super.onOptionsItemSelected(item);

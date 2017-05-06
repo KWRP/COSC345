@@ -1,88 +1,146 @@
 package com.kwrp.planner_gui;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
+
+
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+
+import static com.kwrp.planner_gui.R.id.gridview;
 
 
-/**
- * Created by willy on 30/04/2017.
- * Adapted from
- * https://github.com/jrdnull/Android-Calendar-GridView-Adapter/blob/master/MonthAdapter.java
- */
-public class DisplayMonth extends BaseAdapter {
-    private GregorianCalendar mCalendar;
-    private Calendar mCalendarToday;
-    private Context currentContext;
-    private DisplayMetrics displayMetrics;
-    private List<String> mItems;
-    private int selectedMonth;
-    private int selectedYear;
-    private int mDaysShown;
-    private int mDaysLastMonth;
-    private int mDaysNextMonth;
-    private int mTitleHeight, mDayHeight;
-    private final String[] mDays = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-    private final int[] mDaysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+public class DisplayMonth extends AppCompatActivity {
+    private Calendar currentDate;
+    private ArrayList<Integer> currentDay = new ArrayList<>();
 
-    public DisplayMonth(Context c, int month, int year, DisplayMetrics metrics) {
-        currentContext = c;
-        selectedMonth = month;
-        selectedYear = year;
-        mCalendar = new GregorianCalendar(selectedYear, selectedMonth, 1);
-        mCalendarToday = Calendar.getInstance();
-        displayMetrics = metrics;
-        //populateMonth();
+
+    // Used to load the 'native-lib' library on application startup.
+    static {
+        System.loadLibrary("calender");
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final TextView view = new TextView(currentContext);
-        view.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-        view.setText(mItems.get(position));
-        view.setTextColor(Color.BLACK);
-        return view;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display_month);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_month);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        currentDate = Calendar.getInstance();
+        currentDay.add(currentDate.get(Calendar.DAY_OF_MONTH));
+        currentDay.add(currentDate.get(Calendar.MONTH)); // zero based
+        currentDay.add(currentDate.get(Calendar.YEAR));
+
+        final DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        GridView mGridView = (GridView) findViewById(gridview);
+        mGridView.setAdapter(new MonthAdapter(this, currentDay.get(1), currentDay.get(2), metrics) {
+            @Override
+            protected void onDate(int[] date, int position, View item) {
+            }
+        });
+
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                Intent myIntent = new Intent(arg1.getContext(), DisplayDay.class); /** Class name here */
+                startActivity(myIntent);
+                return true;
+            }
+        });
+
+        // Example of a call to a native method
+        TextView tv = (TextView) findViewById(R.id.sample_text);
+        //tv.setText(stringFromJNI());
+        Log.d("TESTING!!!", testJNI());
+        //mGridView.findViewById(1).tex = testJNI();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_display_week) {
+            Intent myIntent = new Intent(this, DisplayWeek.class); /** Class name here */
+            startActivity(myIntent);
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_sync) {
+            return true;
+        }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_about) {
+            AlertDialog aboutDialog = createAboutDialog();
+            aboutDialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private AlertDialog createAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DisplayMonth.this);
+        builder.setMessage("")
+                .setTitle("About us")
+                .setMessage("Master betrayed us. Wicked. Tricksy, False. We ought to " +
+                        "wring his filthy little neck. Kill him! Kill him! Kill them both! " +
+                        "And then we take the precious... and we be the master!");
+
+        builder.setNeutralButton("Back", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     /**
-     * How many items are in the data set represented by this Adapter.
-     *
-     * @return Count of items.
+     * A native method that is implemented by the 'native-lib' native library,
+     * which is packaged with this application.
      */
-    @Override
-    public int getCount() {
-        return 0;
-    }
-
-    /**
-     * Get the data item associated with the specified position in the data set.
-     *
-     * @param position Position of the item whose data we want within the adapter's
-     *                 data set.
-     * @return The data at the specified position.
-     */
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    /**
-     * Get the row id associated with the specified position in the list.
-     *
-     * @param position The position of the item within the adapter's data set whose row id we want.
-     * @return The id of the item at the specified position.
-     */
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
+    public native String stringFromJNI();
+    public native String testJNI();
 }

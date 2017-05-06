@@ -1,5 +1,6 @@
 package com.kwrp.planner_gui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -18,35 +19,27 @@ public class DisplayWeek extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_week);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_week);
         setSupportActionBar(toolbar);
-
-        BottomNavigationView tabBar = (BottomNavigationView) findViewById((R.id.bottom_nav));
-        tabBar.inflateMenu(R.menu.bottom_navigation);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_week, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_display_month) {
+            Intent myIntent = new Intent(this, DisplayMonth.class); /** Class name here */
+            startActivity(myIntent);
+            finish();
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -57,10 +50,6 @@ public class DisplayWeek extends AppCompatActivity {
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
-            return true;
-        }
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_exit) {
             return true;
         }
         return super.onOptionsItemSelected(item);
