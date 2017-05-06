@@ -16,22 +16,22 @@ bool checkDate(const char* day = 0, const char* month = 0, const char* year = 0)
 	if (eResult != XML_SUCCESS) return false;
 
 	XMLElement* elementYear = xml_doc.FirstChildElement("year");	
-	while (elementYear != nullptr){
-		if !(elementYear->Attribute("YID",year)) elementYear = elementYear->NextSibling("year");
-	}
+	while (elementYear != nullptr && !(elementYear->Attribute("YID",year))){
+		elementYear->NextSibling("year");
 	if (elementYear == nullptr) return false;
+	}
 
 	XMLElement* elementMonth = elementYear->FirstChildElement("month");
-	while (elementMonth != nullptr){
-		if !(elementMonth->Attribute("MID",month)) elementMonth = elementMonth->NextSibling("month");
-	}
+	while (elementMonth != nullptr && !(elementMonth->Attribute("MID",month))){
+		elementMonth = elementMonth->NextSibling("month");
 	if (elementMonth == nullptr) return false;
+	}
 
 	XMLElement* elementDay = elementMonth->FirstChildElement("day");
-	while (elementDay != nullptr){
-		if !(elementDay->Attribute("DID",day)) elementDay = elementDay->NextSibling("day");
-	}
+	while (elementDay != nullptr && !(elementDay->Attribute("DID",day))){
+		elementDay = elementDay->NextSibling("day");
 	if (elementDay == nullptr) return false;
+	}
 
 	eResult = xml_doc.SaveFile("events.xml");
 	XMLCheckResult(eResult);
@@ -122,24 +122,23 @@ bool pullDay(const char* day = 0, const char* month = 0, const char* year = 0) {
 	if (eResult != XML_SUCCESS) return false;
 	
 	XMLElement* elementYear = xml_doc.FirstChildElement("year");	
-	while (elementYear != nullptr){
-		if !(elementYear->Attribute("YID",year)) elementYear = elementYear->NextSibling("year");
-	}
+	while (elementYear != nullptr && !(elementYear->Attribute("YID",year))){
+		elementYear->NextSibling("year");
 	if (elementYear == nullptr) return false;
+	}
 
 	XMLElement* elementMonth = elementYear->FirstChildElement("month");
-	while (elementMonth != nullptr){
-		if !(elementMonth->Attribute("MID",month)) elementMonth = elementMonth->NextSibling("month");
-	}
+	while (elementMonth != nullptr && !(elementMonth->Attribute("MID",month))){
+		elementMonth = elementMonth->NextSibling("month");
 	if (elementMonth == nullptr) return false;
+	}
 
 	XMLElement* elementDay = elementMonth->FirstChildElement("day");
-	while (elementDay != nullptr){
-		if !(elementDay->Attribute("DID",day)) elementDay = elementDay->NextSibling("day");
-	}
+	while (elementDay != nullptr && !(elementDay->Attribute("DID",day))){
+		elementDay = elementDay->NextSibling("day");
 	if (elementDay == nullptr) return false;
+	}
 	
-
 	//start testing section
 	
 	int eventCurr = elementDay->FirstChildElement("event")->IntAttribute("EID");
