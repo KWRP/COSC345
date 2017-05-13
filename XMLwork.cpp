@@ -167,3 +167,7 @@ bool pullDay(const char* day = 0, const char* month = 0, const char* year = 0) {
 
 	return true;
 }
+
+void trial () {
+
+}
